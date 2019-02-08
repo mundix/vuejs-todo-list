@@ -1,11 +1,11 @@
 <template>
     <div>
         <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo" @keyup.enter="addTodo">
-        <div v-for="todo in todos" :key="todo.id" class="todo-item">
+        <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
             <div>
                 {{todo.title}}
             </div>
-            <div class="remove-item">
+            <div class="remove-item" @click="removeTodo(index)">
                 &times;
             </div>
         </div>
@@ -34,8 +34,8 @@ export default {
     }
   },
   methods:{
-      addTodo(){
-
+      addTodo()
+      {
           if (this.newTodo.trim().length ==0) {
               return;
           }
@@ -47,6 +47,10 @@ export default {
           });
             this.newTodo = '';
             this.idForTodo++; 
+      },
+      removeTodo(index)
+      {
+          this.todos.splice(index,1);
       }
   }
 }
