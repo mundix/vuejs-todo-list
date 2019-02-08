@@ -1,2 +1,2 @@
 ## install SASS
-$ npm install sass --
+$ npm install sass-loader node-sass --save
