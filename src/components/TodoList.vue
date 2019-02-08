@@ -1,7 +1,9 @@
 <template>
     <div>
-        <input type="text" class="todo-input" placeholder="What need to be done">
-        Todo List goes here
+        <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo">
+        <div v-for="todo in todos" :key="todo.id">
+            {{todo.title}}
+        </div>
     </div>
 </template>
 
@@ -10,7 +12,19 @@ export default {
   name: 'todo-list',
   data () {
     return {
-      
+      newTodo:'',
+      todos: [
+          {
+              id:1,
+              title:'May the force is with you',
+              completed: false
+          },
+          {
+              id:2,
+              title: 'Bcause im batman',
+              completed: false
+          }
+      ]
     }
   }
 }
