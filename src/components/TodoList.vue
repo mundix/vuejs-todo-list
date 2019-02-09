@@ -12,7 +12,7 @@
             </div>
         </div><!--.todo-item-->
         <div class="extra-container">
-          <div><label for=""><input type="checkbox"> Check All</label></div>
+          <div><label for=""><input type="checkbox" :checked="!anyRmaning" @change="checkAllTodos"> Check All</label></div>
           <div>{{remaining}} items left</div>
         </div>
     </div>
@@ -53,11 +53,13 @@ export default {
   computed:{
     remaining(){
       return this.todos.filter(todo => !todo.completed).length;
+    },
+    anyRmaning(){
+      return this.remaining != 0;
     }
   },
   methods:{
-      addTodo()
-      {
+      addTodo(){
           if (this.newTodo.trim().length ==0) {
               return;
           }
@@ -70,8 +72,7 @@ export default {
             this.newTodo = '';
             this.idForTodo++;
       },
-      removeTodo(index)
-      {
+      removeTodo(index){
           this.todos.splice(index,1);
       },
       editTodo(todo) {
@@ -87,10 +88,13 @@ export default {
 
           todo.editing = false;
       },
-      cancelEdit(todo)
-      {
+      cancelEdit(todo){
         todo.title = this.beforeEditCache;
         todo.editing = false;
+      },
+      checkAllTodos()
+      {
+        this.todos.forEach((todo) =>  todo.completed = event.target.checked);
       }
   }
 }
