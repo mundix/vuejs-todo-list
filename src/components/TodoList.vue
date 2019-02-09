@@ -4,7 +4,7 @@
         <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
             <div class='todo-item-left'>
                 <div class="todo-item-lable" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>
-                <input v-else  type="text" v-model='todo.title' class="todo-item-edit"  @blur="doneEdit(todo)"/>
+                <input v-else  type="text" v-model='todo.title' class="todo-item-edit"  @blur="doneEdit(todo)" v-focus @keyup.esc="cancelEdit(todo)">
             </div>
             <div class="remove-item" @click="removeTodo(index)">
                 &times;
@@ -20,6 +20,7 @@ export default {
     return {
       newTodo:'',
       idForTodo:3,
+      beforeEditCache:'',
       todos: [
           {
               id:1,
@@ -34,6 +35,13 @@ export default {
               editing:false,
           }
       ]
+    }
+  },
+  directives:{
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      }
     }
   },
   methods:{
@@ -56,9 +64,15 @@ export default {
           this.todos.splice(index,1);
       },
       editTodo(todo) {
+        this.beforeEditCache = todo.title;
         todo.editing = true;
       },
       doneEdit(todo){
+        todo.editing = false;
+      },
+      cancelEdit(todo)
+      {
+        todo.title = this.beforeEditCache;
         todo.editing = false;
       }
   }
