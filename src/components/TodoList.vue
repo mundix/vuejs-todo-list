@@ -3,8 +3,8 @@
         <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo" @keyup.enter="addTodo">
         <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
             <div class='todo-item-left'>
-                <div class="todo-item-lable">{{todo.title}}</div>
-                <input  type="text" v-model='todo.title' class="todo-item-edit">
+                <div class="todo-item-lable" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>
+                <input v-else  type="text" v-model='todo.title' class="todo-item-edit"  @blur="doneEdit(todo)"/>
             </div>
             <div class="remove-item" @click="removeTodo(index)">
                 &times;
@@ -24,12 +24,14 @@ export default {
           {
               id:1,
               title:'May the force is with you',
-              completed: false
+              completed: false,
+              editing:false,
           },
           {
               id:2,
               title: 'Bcause im batman',
-              completed: false
+              completed: false,
+              editing:false,
           }
       ]
     }
@@ -52,6 +54,12 @@ export default {
       removeTodo(index)
       {
           this.todos.splice(index,1);
+      },
+      editTodo(todo) {
+        todo.editing = true;
+      },
+      doneEdit(todo){
+        todo.editing = false;
       }
   }
 }
