@@ -10,6 +10,10 @@
             <div class="remove-item" @click="removeTodo(index)">
                 &times;
             </div>
+        </div><!--.todo-item-->
+        <div class="extra-container">
+          <div><label for=""><input type="checkbox"> Check All</label></div>
+          <div>{{remaining}} items left</div>
         </div>
     </div>
 </template>
@@ -22,6 +26,7 @@ export default {
       newTodo:'',
       idForTodo:3,
       beforeEditCache:'',
+      // remaining:0,
       todos: [
           {
               id:1,
@@ -43,6 +48,11 @@ export default {
       inserted: function(el) {
         el.focus();
       }
+    }
+  },
+  computed:{
+    remaining(){
+      return this.todos.filter(todo => !todo.completed).length;
     }
   },
   methods:{
@@ -143,5 +153,35 @@ export default {
       text-decoration:line-through;
       color:grey;
     }
+
+    .extra-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      border-top: 1px solid lightgray;
+      border-top: 14px;
+      margin-bottom: 14px;
+    }
+
+    button {
+      font-size:14px;
+      background-color:white;
+      appearance: none;
+
+      a:hover {
+        background: lightgray;
+      }
+
+      a:focus {
+        outline: none;
+      }
+    }
+
+    .active {
+      background: lightgreen;
+    }
+
+
 
 </style>
