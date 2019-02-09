@@ -3,7 +3,8 @@
         <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo" @keyup.enter="addTodo">
         <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
             <div class='todo-item-left'>
-                <div class="todo-item-lable" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>
+                <input type="checkbox" class="" v-model='todo.completed'>
+                <div class="todo-item-lable" :class="{completed:todo.completed}" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>
                 <input v-else  type="text" v-model='todo.title' class="todo-item-edit"  @blur="doneEdit(todo)" v-focus @keyup.esc="cancelEdit(todo)">
             </div>
             <div class="remove-item" @click="removeTodo(index)">
@@ -113,31 +114,34 @@ export default {
     }
 
 
-  .todo-item-left{
-    display: flex;
-    align-items:center;
-  }
+    .todo-item-left{
+      display: flex;
+      align-items:center;
+    }
 
-  .todo-item-label {
-    padding: 10px;
-    border: 1px solid white;
-    margin-left: 12px;
-  }
+    .todo-item-label {
+      padding: 10px;
+      border: 1px solid white;
+      margin-left: 12px;
+    }
 
-  .todo-item-edit {
-    font-size:24px;
-    color:#2c3e50;
-    margin-left: 12px;
-    width: 100%;
-    padding: 10px;
-    border:1px solid #ccc;
-    font-family: 'Avenir',Arial, Helvetica, sans-serif;
+    .todo-item-edit {
+      font-size:24px;
+      color:#2c3e50;
+      margin-left: 12px;
+      width: 100%;
+      padding: 10px;
+      border:1px solid #ccc;
+      font-family: 'Avenir',Arial, Helvetica, sans-serif;
 
-    a:focus{
-            outline:0
-        }
+      a:focus{
+              outline:0;
+          }
+    }
 
-  }
-
+    .completed {
+      text-decoration:line-through;
+      color:grey;
+    }
 
 </style>
