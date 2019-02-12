@@ -26,7 +26,8 @@
           </div>
 
             <div>
-                Clear Completed
+                <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
+
             </div>
         </div>
     </div>
@@ -38,20 +39,36 @@ export default {
   data () {
     return {
       newTodo:'',
-      idForTodo:3,
+      idForTodo:6,
       beforeEditCache:'',
       // remaining:0,
       filter: 'all',
       todos: [
           {
               id:1,
-              title:'May the force is with you',
+              title:'Avengers: Infinity War',
               completed: false,
               editing:false,
           },
           {
               id:2,
-              title: 'Bcause im batman',
+              title: 'Avengers: Ends Game',
+              completed: false,
+              editing:false,
+          },
+          {
+              id:3,
+              title: 'The Matrix',
+              completed: false,
+              editing:false,
+          },{
+              id:4,
+              title: 'The Incredibles',
+              completed: false,
+              editing:false,
+          },{
+              id:5,
+              title: 'The Lord Of the Rings',
               completed: false,
               editing:false,
           }
@@ -81,11 +98,15 @@ export default {
             return this.todos.filter(todo => todo.completed);
         }
         return this.todos;
+    },
+    showClearCompletedButton()
+    {
+        return this.todos.filter(todo => todo.completed).length > 0
     }
   },
   methods:{
       addTodo(){
-          if (this.newTodo.trim().length ==0) {
+          if (this.newTodo.trim().length === 0) {
               return;
           }
 
@@ -106,7 +127,7 @@ export default {
       },
       doneEdit(todo){
 
-        if (todo.title.trim() ==0) {
+        if (todo.title.trim() ===0) {
               todo.title = this.beforeEditCache;
               return;
           }
@@ -120,6 +141,9 @@ export default {
       checkAllTodos()
       {
         this.todos.forEach((todo) =>  todo.completed = event.target.checked);
+      },
+      clearCompleted(){
+          this.todos = this.todos.filter(todo => !todo.completed);
       }
   }
 }
