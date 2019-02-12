@@ -12,8 +12,20 @@
             </div>
         </div><!--.todo-item-->
         <div class="extra-container">
-          <div><label for=""><input type="checkbox" :checked="!anyRmaning" @change="checkAllTodos"> Check All</label></div>
+          <div><label for=""><input type="checkbox" :checked="!anyRemaning" @change="checkAllTodos"> Check All</label></div>
           <div>{{remaining}} items left</div>
+        </div>
+
+        <div class="extra-container">
+          <div>
+              <button :class="{ active: filter === 'all' }" @click="filter = 'all'">All</button>
+              <button :class="{ active: filter === 'active' }" @click="filter = 'active'">Active</button>
+              <button :class="{ active: filter === 'completed' }" @click="filter = 'completed'">Completed</button>
+          </div>
+
+            <div>
+                Clear Completed
+            </div>
         </div>
     </div>
 </template>
@@ -27,6 +39,7 @@ export default {
       idForTodo:3,
       beforeEditCache:'',
       // remaining:0,
+      filter: 'all',
       todos: [
           {
               id:1,
@@ -54,7 +67,7 @@ export default {
     remaining(){
       return this.todos.filter(todo => !todo.completed).length;
     },
-    anyRmaning(){
+    anyRemaning(){
       return this.remaining != 0;
     }
   },
