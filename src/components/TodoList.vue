@@ -1,7 +1,9 @@
 <template>
     <div>
         <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo" @keyup.enter="addTodo">
-        <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
+        <!--<div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">-->
+        <!--Another computed property todosFiltered-->
+        <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
             <div class='todo-item-left'>
                 <input type="checkbox" class="" v-model='todo.completed'>
                 <div class="todo-item-lable" :class="{completed:todo.completed}" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>
@@ -69,6 +71,16 @@ export default {
     },
     anyRemaning(){
       return this.remaining != 0;
+    },
+    todosFiltered(){
+        if(this.filter === ' all') {
+            return this.todos;
+        }else if (this.filter === 'active'){
+            return this.todos.filter(todo => !todo.completed);
+        } else if(this.filter === 'completed'){
+            return this.todos.filter(todo => todo.completed);
+        }
+        return this.todos;
     }
   },
   methods:{
