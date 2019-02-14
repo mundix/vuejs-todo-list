@@ -14,7 +14,7 @@
             </div>
         </div><!--.todo-item-->
         <div class="extra-container">
-          <div><label for=""><input type="checkbox" :checked="!anyRemaning" @change="checkAllTodos"> Check All</label></div>
+          <div><label ><input type="checkbox" :checked="!anyRemaning" @change="checkAllTodos"> Check All</label></div>
           <div>{{remaining}} items left</div>
         </div>
 
@@ -24,11 +24,12 @@
               <button :class="{ active: filter === 'active' }" @click="filter = 'active'">Active</button>
               <button :class="{ active: filter === 'completed' }" @click="filter = 'completed'">Completed</button>
           </div>
+            <transition name="fade">
+                <div>
+                    <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
 
-            <div>
-                <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
-
-            </div>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -235,6 +236,11 @@ export default {
       background: lightgreen;
     }
 
-
+    .fade-enter-active,.fade-leave-ative {
+        transition: opacity .2s;
+    }
+    .fade-enter,.fade-leave-to{
+        opacity: 0;
+    }
 
 </style>
