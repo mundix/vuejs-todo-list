@@ -3,7 +3,8 @@
         <input type="text" class="todo-input" placeholder="What need to be done" v-model="newTodo" @keyup.enter="addTodo">
         <!--<div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">-->
         <!--Another computed property todosFiltered-->
-        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id">
+        <!--We add the :todo="todo" :index="index" props-->
+        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" :todo="todo" :index="index">
             <!--<div class='todo-item-left'>-->
                 <!--<input type="checkbox" class="" v-model='todo.completed'>-->
                 <!--<div class="todo-item-lable" :class="{completed:todo.completed}" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>-->
