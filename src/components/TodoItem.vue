@@ -3,7 +3,8 @@
         <div class='todo-item-left'>
             <!--Since we have the data properties we don't need the todo.completed , only completed -->
             <!--<input type="checkbox" class="" v-model='todo.completed'>-->
-            <input type="checkbox" class="" v-model='completed'>
+            <!--We gonna add the listened on the check box @change=-->
+            <input type="checkbox" class="" v-model='completed' @change="doneEdit">
             <!--Now we gonna work with editTodo -->
             <div class="todo-item-lable" :class="{completed:completed}" v-if="!editing" @dblclick="editTodo" >{{title}}</div>
             <input v-else  type="text" v-model='title' class="todo-item-edit"  @blur="doneEdit" v-focus @keyup.esc="cancelEdit">
@@ -29,6 +30,10 @@
             index: {
                 type:Number,
                 required: true
+            },
+            checkAll: {
+                type: Boolean,
+                required:true
             }
         },
         data(){
