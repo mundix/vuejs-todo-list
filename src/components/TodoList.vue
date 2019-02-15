@@ -5,7 +5,7 @@
         <!--Another computed property todosFiltered-->
         <!--We add the :todo="todo" :index="index" props-->
         <!--And for call back from the child component using $emit need to call a event here to call the method -->
-        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" @removedTodo="removeTodo">
+        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" @removedTodo="removeTodo" @finishedEdit="finishedEdit">
             <!--<div class='todo-item-left'>-->
                 <!--<input type="checkbox" class="" v-model='todo.completed'>-->
                 <!--<div class="todo-item-lable" :class="{completed:todo.completed}" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>-->
@@ -154,7 +154,11 @@ export default {
       },
       clearCompleted(){
           this.todos = this.todos.filter(todo => !todo.completed);
-      }
+      },
+        finishedEdit(data) {
+            //Data has the arguments from the child passed in the emit finishedEdit(index int, todo {})
+            this.todos.splice(data.index,1,data.todo);
+        }
     }
 }
 </script>

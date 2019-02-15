@@ -58,7 +58,7 @@
                 //we have to do emit event
                 //We need to notified parent we are changed
                 this.editing = false;
-                this.$emit('finishdEdit', {
+                this.$emit('finishedEdit', {
                    'index':this.index,
                    'todo': {
                        'id':this.id,
