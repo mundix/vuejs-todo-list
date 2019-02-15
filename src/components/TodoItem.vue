@@ -4,9 +4,11 @@
             <!--Since we have the data properties we don't need the todo.completed , only completed -->
             <!--<input type="checkbox" class="" v-model='todo.completed'>-->
             <input type="checkbox" class="" v-model='completed'>
-            <div class="todo-item-lable" :class="{completed:completed}" v-if="!editing" @dblclick="editTodo" >{{title}}</div>
-            <input v-else  type="text" v-model='title' class="todo-item-edit"  @blur="doneEdit" v-focus @keyup.esc="cancelEdit">
+            <div class="todo-item-lable" :class="{completed:completed}" v-if="!editing" @dblclick="" >{{title}}</div>
+            <input v-else  type="text" v-model='title' class="todo-item-edit"  @blur="" v-focus @keyup.esc="cancelEdit">
         </div>
+        <!--<div class="remove-item" @click="removeTodo(index)">-->
+        <!--how we don't have the method in this componente we need to recreated on the componentent-->
         <div class="remove-item" @click="removeTodo(index)">
             &times;
         </div>
@@ -36,6 +38,12 @@
                 'completed':this.todo.completed,
                 'editing':this.todo.editing,
                 'beforeEditCache' : ''
+            }
+        },
+        methods:{
+            //we can call from the child to the parent component
+            removeTodo(index){
+                this.$emit('removedTodo',index);
             }
         }
 

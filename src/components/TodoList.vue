@@ -4,7 +4,8 @@
         <!--<div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">-->
         <!--Another computed property todosFiltered-->
         <!--We add the :todo="todo" :index="index" props-->
-        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" :todo="todo" :index="index">
+        <!--And for call back from the child component using $emit need to call a event here to call the method -->
+        <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" @removedTodo="removeTodo">
             <!--<div class='todo-item-left'>-->
                 <!--<input type="checkbox" class="" v-model='todo.completed'>-->
                 <!--<div class="todo-item-lable" :class="{completed:todo.completed}" v-if="!todo.editing" @dblclick="editTodo(todo)" >{{todo.title}}</div>-->
@@ -126,7 +127,9 @@ export default {
             this.newTodo = '';
             this.idForTodo++;
       },
+        // This called fromt he event @removedTodo by passing the method removeTodo and on the event $emit we passed the index
       removeTodo(index){
+          console.log("Called Method from child ");
           this.todos.splice(index,1);
       },
       editTodo(todo) {
