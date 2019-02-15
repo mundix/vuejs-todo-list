@@ -140,7 +140,6 @@ export default {
 
         if (todo.title.trim() ===0) {
               todo.title = this.beforeEditCache;
-              return;
           }
 
           todo.editing = false;

@@ -4,8 +4,9 @@
             <!--Since we have the data properties we don't need the todo.completed , only completed -->
             <!--<input type="checkbox" class="" v-model='todo.completed'>-->
             <input type="checkbox" class="" v-model='completed'>
-            <div class="todo-item-lable" :class="{completed:completed}" v-if="!editing" @dblclick="" >{{title}}</div>
-            <input v-else  type="text" v-model='title' class="todo-item-edit"  @blur="" v-focus @keyup.esc="cancelEdit">
+            <!--Now we gonna work with editTodo -->
+            <div class="todo-item-lable" :class="{completed:completed}" v-if="!editing" @dblclick="editTodo" >{{title}}</div>
+            <input v-else  type="text" v-model='title' class="todo-item-edit"  @blur="doneEdit" v-focus @keyup.esc="cancelEdit">
         </div>
         <!--<div class="remove-item" @click="removeTodo(index)">-->
         <!--how we don't have the method in this componente we need to recreated on the componentent-->
@@ -44,7 +45,33 @@
             //we can call from the child to the parent component
             removeTodo(index){
                 this.$emit('removedTodo',index);
-            }
+            },
+            editTodo() {
+                this.beforeEditCache = this.title;
+                this.editing = true;
+            },
+            doneEdit(){
+
+                if (this.title.trim() ===0) {
+                    this.title = this.beforeEditCache;
+                }
+                //we have to do emit event
+                //We need to notified parent we are changed
+                this.editing = false;
+                this.$emit('finishdEdit', {
+                   'index':this.index,
+                   'todo': {
+                       'id':this.id,
+                       'title':this.title,
+                       'completed':this.completed,
+                       'editing':this.editing
+                   }
+                });
+            },
+            cancelEdit(){
+                this.title = this.beforeEditCache;
+                this.editing = false;
+            },
         }
 
     }
